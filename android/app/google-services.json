@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1049114461967",
+    "project_id": "movieio-33fd8",
+    "storage_bucket": "movieio-33fd8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049114461967:android:6906b1840dc1e18bf1a07a",
+        "android_client_info": {
+          "package_name": "com.example.movieio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049114461967-tfonkavcu2ao9sv5tfevokflgpuh4qmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-yRutQs-7PbDdrzo5qfqadrJ0u7vdWgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049114461967-tfonkavcu2ao9sv5tfevokflgpuh4qmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
