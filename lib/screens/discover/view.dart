@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:movieio/common/routes/routes.dart';
 import 'package:movieio/common/utils/constants/colors.dart';
-import 'package:movieio/common/utils/constants/image.dart';
 import 'package:movieio/common/utils/constants/sizes.dart';
-import 'package:movieio/common/widgets/circular.image.dart';
-import 'package:movieio/common/widgets/shimmer.effect.dart';
+import 'package:movieio/common/utils/helpers/functions.dart';
+import 'package:movieio/common/widgets/grid.layout.dart';
+import 'package:movieio/common/widgets/movie.vertical.card.dart';
+import 'package:movieio/common/widgets/section.heading.dart';
+import 'package:movieio/common/widgets/slider.dart';
 import 'package:movieio/screens/discover/controller.dart';
 
 class ExploreScreen extends GetView<ExploreController> {
@@ -14,6 +17,7 @@ class ExploreScreen extends GetView<ExploreController> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = MVHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie .io'),
@@ -46,11 +50,11 @@ class ExploreScreen extends GetView<ExploreController> {
                     onTap: () {},
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Iconsax.user,
                           size: 20,
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           "Profile",
                           style:
@@ -85,55 +89,64 @@ class ExploreScreen extends GetView<ExploreController> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(MVSizes.defaultSpace),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: MVSizes.defaultSpace,
+              vertical: MVSizes.defaultSpace / 4,
+            ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // --- Slider
+                MVSlider(dark: dark),
+                const SizedBox(height: MVSizes.spaceBtwSections),
+
+                // --- Trending
+                Column(
                   children: [
-                    // --- App Name
-                    Container(
-                      child: const Text('Movie.io'),
+                    MVSectionHeading(
+                      showActionButton: true,
+                      title: 'Trending Now',
+                      onPressed: () => Get.toNamed(AppRoutes.TRENDING_NOW),
                     ),
-                    // --- Profile
-                    Obx(() {
-                      final networkImage = controller.user.value.profilePicture;
-                      final image = networkImage.isNotEmpty
-                          ? networkImage
-                          : MVImageString.facebook;
-                      return controller.profileLoading.value
-                          ? const MVShimmerEffect(width: 40, height: 40)
-                          : MVCircularImage(
-                              image: image,
-                              isNetworkImage: networkImage.isNotEmpty,
-                              width: 40,
-                              height: 40,
-                              border: 40,
-                            );
-                    }),
+                    Obx(
+                      () => MVGridLayout(
+                        itemCount: controller.trendingNowMoviews.length,
+                        mainAxisExtent: 260,
+                        itemBuilder: (_, index) {
+                          return MVCardVertical(
+                            movie: controller.trendingNowMoviews[index],
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () => controller.logout(),
-                    child: const Text('Logout'),
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () => controller.fetchUserRecord(),
-                    child: Obx(() => Text(controller.user.value.email)),
-                  ),
-                ),
+                const SizedBox(height: MVSizes.spaceBtwSections),
+
+                // --- Popular
+                Column(
+                  children: [
+                    MVSectionHeading(
+                      showActionButton: true,
+                      title: 'Popular',
+                      onPressed: () => Get.toNamed(AppRoutes.TRENDING_NOW),
+                    ),
+                    Obx(
+                      () => MVGridLayout(
+                        itemCount: controller.trendingNowMoviews.length,
+                        mainAxisExtent: 260,
+                        itemBuilder: (_, index) {
+                          return MVCardVertical(
+                            movie: controller.trendingNowMoviews[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                )
               ],
-            ),
-          ),
-        ),
+            )),
       ),
     );
   }

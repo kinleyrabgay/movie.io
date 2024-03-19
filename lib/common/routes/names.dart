@@ -14,4 +14,6 @@ class AppRoutes {
   static const HOME = '/home';
   static const EXPLORE = '/explore';
   static const PROFILE = '/profile';
+  static const MOVIE_DETAIL = '/movie_detail';
+  static const TRENDING_NOW = '/trending_now';
 }

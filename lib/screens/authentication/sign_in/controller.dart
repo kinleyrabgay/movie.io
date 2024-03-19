@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:movieio/common/configs/internet.dart';
@@ -31,6 +32,7 @@ class LoginController extends GetxController {
   // ----- Init --------
   @override
   void onInit() {
+    FlutterNativeSplash.remove();
     // ---- Read storage for (E & P)
     email.text = localStorage.read('REMEMBER_ME_EMAIL') ?? '';
     password.text = localStorage.read('REMEMBER_ME_PASSWORD') ?? '';

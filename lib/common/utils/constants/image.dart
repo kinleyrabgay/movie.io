@@ -1,8 +1,8 @@
 class MVImageString {
   MVImageString._();
 
-  static const String darkAppLogo = "assets/logos/logo.png";
-  static const String lightAppLogo = "assets/logos/logo.png";
+  static const String darkAppLogo = "assets/logos/tmdb-logo.svg";
+  static const String lightAppLogo = "assets/logos/tmdb-log.svg";
 
   // ---- App
   static const String pageUnderConstruction =

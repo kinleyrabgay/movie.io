@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:movieio/common/api/api.service.dart';
+import 'package:movieio/common/entities/tmdb.movie.dart';
 import 'package:movieio/common/models/user.model.dart';
 import 'package:movieio/common/routes/routes.dart';
 import 'package:movieio/common/store/user.dart';
@@ -13,11 +16,33 @@ class ExploreController extends GetxController {
   Rx<UserModel> user = UserModel.empty().obs;
   final userRepository = Get.put(UserRepository());
   final profileLoading = false.obs;
+  final mainTopRatedMovies = <Movie>[].obs;
+  final trendingNowMoviews = <Movie>[].obs;
+  final loading = false.obs;
+
+  // Rx<List<Movie>?> topRated = Movie.empty().obs as Rx<List<Movie>?>;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onInit() async {
+    loading.value = true;
+
+    // --- User
     fetchUserRecord();
+
+    // --- Top Rated
+    mainTopRatedMovies.value = (await MovieServices.getTopRatedMovies())!;
+
+    // --- Trending Now
+    trendingNowMoviews.value = (await MovieServices.getTrendingMovies())!;
+
+    // --- Pupular
+
+    
+    FlutterNativeSplash.remove();
+
+    loading.value = false;
+    super.onInit();
+    //  mainTopRatedMovies.value = (await ApiService.getTopRatedMovies())!;
   }
 
   // Save user Record from any Registration Provider
@@ -61,7 +86,6 @@ class ExploreController extends GetxController {
   }
 
   Future<void> fetchUserRecord() async {
-    print('Called!');
     try {
       final user = await userRepository.fetchUserDetails();
       this.user(user);
